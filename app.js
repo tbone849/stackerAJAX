@@ -109,6 +109,7 @@ var getTopAnswerers = function(tag) {
 
 		$.each(result.items, function(i, item) {
 			var answererDetails = showTopAnswerers(item);
+			// display top answerers
 			$('.results').append(answererDetails);
 		});
 	})
