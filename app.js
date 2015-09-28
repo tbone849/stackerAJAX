@@ -121,30 +121,20 @@ var getTopAnswerers = function(tag) {
 var showTopAnswerers = function(answerer) {
 	
 	// clone our result template code
-	var result = $('.templates .question').clone();
+	var result = $('.templates .answerer').clone();
 	
-	// Set the question properties in result
-	var questionElem = result.find('.question-text a');
-	questionElem.attr('href', question.link);
-	questionElem.text(question.title);
+	// Set the answerer's display name and link 
+	var displayName = result.find('.display_name a');
+	displayName.attr('href', answerer.user.link);
+	displayName.text(answerer.user.display_name);
 
-	// set the date asked property in result
-	var asked = result.find('.asked-date');
-	var date = new Date(1000*question.creation_date);
-	asked.text(date.toString());
+	// set the answerer's score
+	var score = result.find('.score');
+	score.text(answerer.score);
 
-	// set the #views for question property in result
-	var viewed = result.find('.viewed');
-	viewed.text(question.view_count);
-
-	// set some properties related to asker
-	var asker = result.find('.asker');
-	asker.html('<p>Name: <a target="_blank" href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
-													question.owner.display_name +
-												'</a>' +
-							'</p>' +
- 							'<p>Reputation: ' + question.owner.reputation + '</p>'
-	);
+	// set the anwerer's post count
+	var postCount = result.find('.post_count');
+	postCount.text(answerer.post_count);
 
 	return result;
 };
