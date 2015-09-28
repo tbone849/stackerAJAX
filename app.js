@@ -88,5 +88,33 @@ var getUnanswered = function(tags) {
 	});
 };
 
+var getInspired = function(tags) {
+	
+	// the parameters we need to pass in our request to StackOverflow's API
+	var request = {tagged: tags,
+								site: 'stackoverflow',
+								tag: tags,
+								period: 'all_time'};
+	
+	var result = $.ajax({
+		url: "http://api.stackexchange.com/2.2/tags",
+		data: request,
+		dataType: "jsonp",
+		type: "GET",
+		})
+	.done(function(result){
+		var searchResults = showSearchResults(request.tagged, result.items.length);
 
+		$('.search-results').html(searchResults);
+
+		$.each(result.items, function(i, item) {
+			var question = showQuestion(item);
+			$('.results').append(question);
+		});
+	})
+	.fail(function(jqXHR, error, errorThrown){
+		var errorElem = showError(error);
+		$('.search-results').append(errorElem);
+	});
+};
 
